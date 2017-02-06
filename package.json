@@ -1,0 +1,40 @@
+{
+  "name": "pikoro",
+  "version": "0.0.1",
+  "private": false,
+  "main": "pikoro.js",
+  "browserify": {
+    "transform": [
+      "brfs"
+    ]
+  },
+  "dependencies": {
+    "brfs": "^1.1.1",
+    "domify": "^1.4.0"
+  },
+  "description": "Minimal Datepicker",
+  "scripts": {
+    "test": "mocha **/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dylanrevisited/pikoro.git"
+  },
+  "keywords": [
+    "browserify",
+    "browser"
+  ],
+  "author": "Daniel Guerra",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dylanrevisited/pikoro/issues"
+  },
+  "homepage": "https://github.com/dylanrevisited/pikoro#readme",
+  "devDependencies": {
+    "eslint": "^3.15.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "mocha": "^3.2.0"
+  }
+}
