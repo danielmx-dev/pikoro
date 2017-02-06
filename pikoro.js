@@ -1,6 +1,7 @@
 var domify = require('domify')
 var fs = require('fs')
 var getWeekdays = require('./lib/get-weekdays')
+var buildWeeksHtml = require('./lib/build-weeks-html')
 
 var equalsMonth = function (date1, date2) {
   if (!date1 || !date2) {
@@ -10,12 +11,20 @@ var equalsMonth = function (date1, date2) {
     date1.getFullYear() === date2.getFullYear()
 }
 
+var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December']
+var printMonth = function (date) {
+  return monthNames[date.getMonth()]
+}
+
 var pikoroTemplate = fs.readFileSync(__dirname + '/pikoro.html', 'utf8') // eslint-disable-line 
 
 function Pikoro (initDate) {
   // Variables
   var monthChanged
   var selectedDate
+  var displayYear
+  var displayMonth
   var root
 
   // Methods
@@ -27,10 +36,8 @@ function Pikoro (initDate) {
 
   var updateComponent = function () {
     var weekdays = getWeekdays(selectedDate)
-    var nodes = weekdays.map(function (date) {
-      return '<div>' + date.getDate() + '</div>'
-    })
-    root.querySelector('.pk-days-container').innerHTML = nodes.join('')
+    root.querySelector('.pk-current-month').innerHTML = printMonth(selectedDate)
+    root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(weekdays)
   }
 
   var initializeNodes = function () {
