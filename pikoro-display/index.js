@@ -26,7 +26,7 @@ function Display (initDate) {
   }
 
   var updateComponent = function () {
-    root.querySelector('.pk-current-month').innerHTML = printMonth(displayMonth)
+    root.querySelector('.pk-current-month').innerHTML = displayYear + ' ' + printMonth(displayMonth)
     root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth, selectedDate)
   }
 
