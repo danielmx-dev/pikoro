@@ -38,6 +38,9 @@ function Display (initDate) {
   }
 
   var onDateClick = function (event) {
+    if (!event.target.classList.contains('pk-date')) {
+      return
+    }
     selectDate(new Date(Number(event.target.dataset.timestamp)))
   }
 

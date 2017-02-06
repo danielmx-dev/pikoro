@@ -23,7 +23,7 @@ module.exports = function (year, month, selected) {
     }
     style += '"'
 
-    html += '<span ' + style + ' data-timestamp="' + date.getTime() + '">' + date.getDate() + '</span>'
+    html += '<span class="pk-date"' + style + ' data-timestamp="' + date.getTime() + '">' + date.getDate() + '</span>'
     if (date.getDay() === 6) {
       html += '</div>'
     }
