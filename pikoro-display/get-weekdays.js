@@ -1,11 +1,8 @@
 var ONE_DAY_IN_SECONDS = 24 * 60 * 60 * 1000
 var TOTAL_NUMBER_OF_DAYS = 42
 
-module.exports = function (date) {
-  if (!(date instanceof Date)) {
-    throw new TypeError('Expected a Date instance')
-  }
-  var startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
+module.exports = function (year, month) {
+  var startOfMonth = new Date(year, month, 1)
   var leftPadding = getLeftPadding(startOfMonth)
   var numberOfMissingDates = TOTAL_NUMBER_OF_DAYS - leftPadding.length
 

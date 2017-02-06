@@ -15,7 +15,7 @@
   "description": "Minimal Datepicker",
   "scripts": {
     "test": "mocha **/*.test.js",
-    "test:basic": "beefy -t brfs example/pikoro-basic.js"
+    "beefy:display": "beefy -t brfs example/pikoro-display.js"
   },
   "repository": {
     "type": "git",
