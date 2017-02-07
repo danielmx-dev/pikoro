@@ -1,0 +1,43 @@
+.pk-display {
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.pk-display .pk-days-container .pk-date {
+  display: inline-block;
+  width: 3em;
+  height: 2em;
+  line-height: 2em;
+  cursor: pointer;
+  text-align: center;
+  border: lightgray 1px solid;
+}
+
+.pk-display .pk-days-container .pk-date:hover {
+  background-color: #EEE;
+}
+
+.pk-display .pk-days-container .pk-date.another {
+  color: gray;
+}
+
+.pk-display .pk-days-container .pk-date.selected {
+  color: red;
+  font-weight: bold;
+}
+
+.pk-display .pk-controls-wrapper {
+  height: 2em;
+  text-align: center;
+}
+
+.pk-display .pk-controls-wrapper .pk-current-month {
+  display: inline-block;
+  width: 50%;
+}
+
+.pk-display .pk-controls-wrapper .pk-controls .pk-selector {
+  padding: 0.5em;
+  width: 3em;
+  cursor: pointer;
+}

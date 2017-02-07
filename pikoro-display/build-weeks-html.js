@@ -14,16 +14,15 @@ module.exports = function (year, month, selected) {
       html += '<div>'
     }
 
-    var style = 'style="display:inline-block;width:2em;'
+    var classes = []
     if (date.getMonth() !== month) {
-      style += 'color: lightgray;'
+      classes.push('another')
     }
     if (isSameDay(date, selected)) {
-      style += 'color: red;'
+      classes.push('selected')
     }
-    style += '"'
 
-    html += '<span class="pk-date"' + style + ' data-timestamp="' + date.getTime() + '">' + date.getDate() + '</span>'
+    html += '<span class="pk-date ' + classes.join(' ') + '" data-timestamp="' + date.getTime() + '">' + date.getDate() + '</span>'
     if (date.getDay() === 6) {
       html += '</div>'
     }

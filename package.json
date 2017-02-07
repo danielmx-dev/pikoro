@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "brfs": "^1.1.1",
-    "domify": "^1.4.0"
+    "domify": "^1.4.0",
+    "insert-css": "^2.0.0",
+    "lodash.assign": "^4.2.0"
   },
   "description": "Minimal Datepicker",
   "scripts": {

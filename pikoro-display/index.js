@@ -1,6 +1,12 @@
 var domify = require('domify')
 var fs = require('fs')
 var buildWeeksHtml = require('./build-weeks-html')
+var EventEmitter = require('events').EventEmitter
+var assign = require('lodash.assign')
+var insertCss = require('insert-css')
+
+var css = fs.readFileSync(__dirname + '/styles.css', 'utf8') // eslint-disable-line 
+insertCss(css)
 
 var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December']
@@ -16,6 +22,7 @@ function Display (initDate) {
   var displayYear
   var displayMonth
   var root
+  var emitter = new EventEmitter()
 
   // Methods
   var selectDate = function (date) {
@@ -26,7 +33,7 @@ function Display (initDate) {
   }
 
   var updateComponent = function () {
-    root.querySelector('.pk-current-month').innerHTML = displayYear + ' ' + printMonth(displayMonth)
+    root.querySelector('.pk-current-month').innerHTML = printMonth(displayMonth) + ' ' + displayYear
     root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth, selectedDate)
   }
 
@@ -41,7 +48,9 @@ function Display (initDate) {
     if (!event.target.classList.contains('pk-date')) {
       return
     }
-    selectDate(new Date(Number(event.target.dataset.timestamp)))
+    var selected = new Date(Number(event.target.dataset.timestamp))
+    selectDate(selected)
+    emitter.emit('change', selected)
   }
 
   var displayNextMonth = function () {
@@ -73,12 +82,11 @@ function Display (initDate) {
   initializeNodes()
   selectDate(initDate)
 
-  return {
+  // Module exports
+  return assign(emitter, {
     selectDate: selectDate,
     getComponent: getComponent
-  }
+  })
 }
-
-Display.prototype.render = function () { }
 
 module.exports = Display
