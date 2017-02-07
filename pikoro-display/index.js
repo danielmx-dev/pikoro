@@ -39,7 +39,7 @@ function Display (initDate) {
   var updateComponent = function () {
     if (currentMonth !== displayMonth || currentYear !== displayYear) {
       root.querySelector('.pk-current-month').innerHTML = printMonth(displayMonth) + ' ' + displayYear
-      root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth, selectedDate)
+      root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth)
 
       currentMonth = displayMonth
       currentYear = displayYear

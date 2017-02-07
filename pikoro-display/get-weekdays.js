@@ -25,7 +25,7 @@ var getLeftPadding = function (date) {
 }
 
 var moveDate = function (date, offset) {
-  return new Date(date.getTime() + (ONE_DAY_IN_SECONDS * offset))
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset)
 }
 
 var generateMissingDates = function (date, numberOfDays) {
