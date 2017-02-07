@@ -4,6 +4,7 @@ var buildWeeksHtml = require('./build-weeks-html')
 var EventEmitter = require('events').EventEmitter
 var assign = require('lodash.assign')
 var insertCss = require('insert-css')
+var isSameDay = require('./is-same-day')
 
 var css = fs.readFileSync(__dirname + '/styles.css', 'utf8') // eslint-disable-line 
 insertCss(css)
@@ -21,6 +22,9 @@ function Display (initDate) {
   var selectedDate
   var displayYear
   var displayMonth
+  var currentMonth
+  var currentYear
+  var currentDate
   var root
   var emitter = new EventEmitter()
 
@@ -33,8 +37,26 @@ function Display (initDate) {
   }
 
   var updateComponent = function () {
-    root.querySelector('.pk-current-month').innerHTML = printMonth(displayMonth) + ' ' + displayYear
-    root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth, selectedDate)
+    if (currentMonth !== displayMonth || currentYear !== displayYear) {
+      root.querySelector('.pk-current-month').innerHTML = printMonth(displayMonth) + ' ' + displayYear
+      root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth, selectedDate)
+
+      currentMonth = displayMonth
+      currentYear = displayYear
+    }
+
+    if (!isSameDay(selectedDate, currentDate)) {
+      var container = root.querySelector('.pk-days-container')
+      var selectedElement = container.querySelector('.selected')
+      if (selectedElement) {
+        selectedElement.classList.remove('selected')
+      }
+
+      var normalizedDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate())
+      container.querySelector('.pk-date[data-timestamp="' + normalizedDate.getTime() + '"]').classList.add('selected')
+
+      currentDate = selectedDate
+    }
   }
 
   var initializeNodes = function () {

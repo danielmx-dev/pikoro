@@ -1,10 +1,5 @@
 var getWeekdays = require('./get-weekdays')
-
-var isSameDay = function (date1, date2) {
-  return date1.getFullYear() === date2.getFullYear() &&
-         date1.getMonth() === date2.getMonth() &&
-         date1.getDate() === date2.getDate()
-}
+var isSameDay = require('./is-same-day')
 
 module.exports = function (year, month, selected) {
   var html = ''
