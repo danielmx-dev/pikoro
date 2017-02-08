@@ -56,6 +56,7 @@ function Display (initDate) {
     }
     container.querySelector('.pk-date[data-timestamp="' + selectedDate.getTime() + '"]').classList.add('selected')
     currentDate = selectedDate
+    emitter.emit('change', selectedDate)
   }
 
   var initializeNodes = function () {
@@ -71,7 +72,6 @@ function Display (initDate) {
     }
     var selected = new Date(Number(event.target.dataset.timestamp))
     selectDate(selected)
-    emitter.emit('change', selected)
   }
 
   var displayNextMonth = function () {
