@@ -4,16 +4,10 @@ var buildWeeksHtml = require('./build-weeks-html')
 var EventEmitter = require('events').EventEmitter
 var assign = require('lodash.assign')
 var insertCss = require('insert-css')
-var isSameDay = require('./is-same-day')
+var dateFunctions = require('../common/date-functions')
 
 var css = fs.readFileSync(__dirname + '/styles.css', 'utf8') // eslint-disable-line 
 insertCss(css)
-
-var monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December']
-var printMonth = function (month) {
-  return monthNames[month]
-}
 
 var pikoroTemplate = fs.readFileSync(__dirname + '/template.html', 'utf8') // eslint-disable-line 
 
@@ -30,7 +24,7 @@ function Display (initDate) {
 
   // Methods
   var selectDate = function (date) {
-    selectedDate = date
+    selectedDate = dateFunctions.normalizeDate(date)
     displayYear = date.getFullYear()
     displayMonth = date.getMonth()
     updateComponent()
@@ -38,25 +32,30 @@ function Display (initDate) {
 
   var updateComponent = function () {
     if (currentMonth !== displayMonth || currentYear !== displayYear) {
-      root.querySelector('.pk-current-month').innerHTML = printMonth(displayMonth) + ' ' + displayYear
-      root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth)
-
-      currentMonth = displayMonth
-      currentYear = displayYear
+      updateDisplayedMonth()
     }
 
-    if (!isSameDay(selectedDate, currentDate)) {
-      var container = root.querySelector('.pk-days-container')
-      var selectedElement = container.querySelector('.selected')
-      if (selectedElement) {
-        selectedElement.classList.remove('selected')
-      }
-
-      var normalizedDate = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate())
-      container.querySelector('.pk-date[data-timestamp="' + normalizedDate.getTime() + '"]').classList.add('selected')
-
-      currentDate = selectedDate
+    if (!dateFunctions.isSameDay(selectedDate, currentDate)) {
+      updateSelectedDateElement()
     }
+  }
+
+  var updateDisplayedMonth = function () {
+    root.querySelector('.pk-current-month').innerHTML = dateFunctions.getMonthName(displayMonth) + ' ' + displayYear
+    root.querySelector('.pk-days-container').innerHTML = buildWeeksHtml(displayYear, displayMonth)
+
+    currentMonth = displayMonth
+    currentYear = displayYear
+  }
+
+  var updateSelectedDateElement = function () {
+    var container = root.querySelector('.pk-days-container')
+    var selectedElement = container.querySelector('.selected')
+    if (selectedElement) {
+      selectedElement.classList.remove('selected')
+    }
+    container.querySelector('.pk-date[data-timestamp="' + selectedDate.getTime() + '"]').classList.add('selected')
+    currentDate = selectedDate
   }
 
   var initializeNodes = function () {

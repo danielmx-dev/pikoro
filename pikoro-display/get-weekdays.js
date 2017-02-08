@@ -1,38 +1,23 @@
-var ONE_DAY_IN_SECONDS = 24 * 60 * 60 * 1000
+var dateFunctions = require('../common/date-functions')
 var TOTAL_NUMBER_OF_DAYS = 42
 
 module.exports = function (year, month) {
   var startOfMonth = new Date(year, month, 1)
-  var leftPadding = getLeftPadding(startOfMonth)
-  var numberOfMissingDates = TOTAL_NUMBER_OF_DAYS - leftPadding.length
+  var startDate = getAbsoluteStartDate(startOfMonth)
 
-  return leftPadding.concat(generateMissingDates(startOfMonth, numberOfMissingDates))
+  return generateDates(startDate, TOTAL_NUMBER_OF_DAYS)
 }
 
-var getLeftPadding = function (date) {
-  var startDate = date.getDay()
-  if (startDate === 0) {
-    return []
-  }
-
-  var pivot = date
-  var dates = []
-  while (startDate--) {
-    pivot = moveDate(pivot, -1)
-    dates.unshift(pivot)
-  }
-  return dates
+var getAbsoluteStartDate = function (startOfMonth) {
+  var startDayOfWeek = startOfMonth.getDay()
+  return dateFunctions.moveDate(startOfMonth, -startDayOfWeek)
 }
 
-var moveDate = function (date, offset) {
-  return new Date(date.getFullYear(), date.getMonth(), date.getDate() + offset)
-}
-
-var generateMissingDates = function (date, numberOfDays) {
+var generateDates = function (date, numberOfDays) {
   var pivot = date
   var dates = [pivot]
   while (--numberOfDays) {
-    pivot = moveDate(pivot, 1)
+    pivot = dateFunctions.moveDate(pivot, 1)
     dates.push(pivot)
   }
   return dates

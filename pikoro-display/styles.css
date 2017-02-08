@@ -1,15 +1,26 @@
 .pk-display {
+  box-sizing: border-box;
   display: inline-block;
   font-family: Arial, Helvetica, sans-serif;
+  border: 1px solid lightgray;
+}
+
+.pk-display .pk-cell {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 3em;
+  text-align: center;
+  margin: 0;
+}
+
+.pk-display .pk-weekdays .pk-day-name {
+  font-weight: bold;
 }
 
 .pk-display .pk-days-container .pk-date {
-  display: inline-block;
-  width: 3em;
   height: 2em;
   line-height: 2em;
   cursor: pointer;
-  text-align: center;
   border: lightgray 1px solid;
 }
 

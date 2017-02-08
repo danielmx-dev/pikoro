@@ -1,23 +1,15 @@
 var getWeekdays = require('./get-weekdays')
+var buildDateHtml = require('./build-date-html')
+var chunk = require('lodash.chunk')
+var reduce = require('lodash.reduce')
 
 module.exports = function (year, month) {
-  var html = ''
   var weekdays = getWeekdays(year, month)
-  weekdays.forEach(function (date) {
-    if (date.getDay() === 0) {
-      html += '<div>'
-    }
 
-    var classes = []
-    if (date.getMonth() !== month) {
-      classes.push('another')
-    }
-
-    html += '<span class="pk-date ' + classes.join(' ') + '" data-timestamp="' + date.getTime() + '">' + date.getDate() + '</span>'
-    if (date.getDay() === 6) {
-      html += '</div>'
-    }
-  })
-
-  return html
+  return reduce(chunk(weekdays, 7), function (html, week) {
+    var daySpans = reduce(week, function (daysHtml, date) {
+      return daysHtml + buildDateHtml(date, month)
+    }, '')
+    return html + '<div>' + daySpans + '</div>'
+  }, '')
 }
